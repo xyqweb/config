@@ -223,7 +223,7 @@ class Zookeeper extends ConfigFactory
                 [
                     'perms'  => \Zookeeper::PERM_ALL,
                     'scheme' => 'ip',
-                    'id'     => Yii::$app->params['configAuthIp'],
+                    'id'     => $this->params['authIp'] ?? '0.0.0.0',
                 ]
             ];
         }
