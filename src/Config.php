@@ -10,7 +10,6 @@ declare(strict_types = 1);
 namespace xyqWeb\config;
 
 
-use Phalcon\Di;
 use xyqWeb\config\drivers\ConfigException;
 use xyqWeb\config\drivers\ConfigFactory;
 
@@ -31,8 +30,8 @@ class Config
             $configStorageMedium = \Yii::$app->params['configStorageMedium'];
             $configStorageParams = \Yii::$app->params['configStorageParams'];
         } elseif (defined('APP_ENVIRONMENT')) {
-            $configStorageMedium = Di::getDefault()->get('config')->params->configStorageMedium;
-            $configStorageParams = Di::getDefault()->get('config')->application->params->configStorageParams->toArray();
+            $configStorageMedium = \Phalcon\Di::getDefault()->get('config')->params->configStorageMedium;
+            $configStorageParams = \Phalcon\Di::getDefault()->get('config')->params->configStorageParams->toArray();
         } else {
             $file = __DIR__ . '/config.json';
             $config = file_exists($file) ? json_decode(file_get_contents(__DIR__ . '/config.json'), true) : null;
