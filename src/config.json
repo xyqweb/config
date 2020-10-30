@@ -1,0 +1,10 @@
+{
+  "configStorageMedium": "Redis",
+  "configStorageParams": {
+    "host": "xxx.xxx.xx.xx",
+    "port": 6379,
+    "password": "xxxxxxx",
+    "database": 0,
+    "prefix": "config"
+  }
+}

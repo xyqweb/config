@@ -1,0 +1,22 @@
+{
+    "name": "xyqweb/config",
+    "description": "global configuration",
+    "type": "library",
+    "license": "BSD 3-Clause License",
+    "authors": [
+        {
+            "name": "xyq",
+            "email": "xyq@weiyian.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+      "php": ">=7.1.0",
+      "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "xyqWeb\\config\\": "src"
+        }
+    }
+}
