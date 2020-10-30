@@ -69,13 +69,14 @@ class Config
      *
      * @author xyq
      * @param string $key
+     * @param bool $ignore_block
      * @return bool|string|null
      * @throws ConfigException
      */
-    public static function get(string $key)
+    public static function get(string $key, bool $ignore_block = false)
     {
         self::checkKey($key);
-        return self::init()->get($key);
+        return self::init()->get($key, $ignore_block);
     }
 
     /**

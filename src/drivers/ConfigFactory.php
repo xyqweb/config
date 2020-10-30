@@ -41,9 +41,10 @@ abstract class ConfigFactory
      *
      * @author xyq
      * @param string $key
+     * @param bool $ignore_block
      * @return string|null
      */
-    abstract public function get(string $key);
+    abstract public function get(string $key, bool $ignore_block = false);
 
     /**
      * 设置配置项

@@ -57,12 +57,13 @@ class QConf extends ConfigFactory
      *
      * @author xyq
      * @param string $key
+     * @param bool $ignore_block
      * @return string|null
      * @throws ConfigException
      */
-    public function get(string $key)
+    public function get(string $key, bool $ignore_block = false)
     {
-        if (0 == $this->checkParentStatus($key, $this->getRelation($key))) {
+        if (false == $ignore_block && 0 == $this->checkParentStatus($key, $this->getRelation($key))) {
             return null;
         }
         $path = $this->buildPath($key);
