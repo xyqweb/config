@@ -29,7 +29,7 @@ class Config
     {
         if (defined('YII_ENV')) {
             $configStorageMedium = \Yii::$app->params['configStorageMedium'];
-            $configStorageParams = \Yii::$app->params->configStorageParams;
+            $configStorageParams = \Yii::$app->params['configStorageParams'];
         } elseif (defined('APP_ENVIRONMENT')) {
             $configStorageMedium = Di::getDefault()->get('config')->params->configStorageMedium;
             $configStorageParams = Di::getDefault()->get('config')->application->params->configStorageParams->toArray();
