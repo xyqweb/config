@@ -249,7 +249,7 @@ class QConf extends ConfigFactory
                 [
                     'perms'  => \Zookeeper::PERM_ALL,
                     'scheme' => 'ip',
-                    'id'     => $this->params['authIp'] ?? '0.0.0.0',
+                    'id'     => $this->params['authIp'] ?? '0.0.0.0/0',
                 ]
             ];
         }
