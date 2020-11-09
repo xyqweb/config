@@ -101,11 +101,18 @@ class QConf extends ConfigFactory
             $parent = $this->parent[$parentKey];
         } else {
             $finalKey = $this->buildPath($parentKey);
-            if (false == self::$_instance->exists($finalKey)) {
-                return 0;
+            $parent = \QConf::getConf($finalKey);
+            if (!is_numeric($parent) && !is_string($parent)) {
+                $this->getZookeeper();
+                if (!self::$_instance->exists($finalKey)) {
+                    $parent = 0;
+                } else {
+                    $parent = self::$_instance->get($finalKey);
+                    $this->parent = [$parentKey => $parent];
+                }
+            } else {
+                $this->parent = [$parentKey => $parent];
             }
-            $parent = self::$_instance->get($finalKey);
-            $this->parent = [$parentKey => $parent];
         }
         if (empty($parent)) {
             return 0;
