@@ -72,6 +72,7 @@ class QConf extends ConfigFactory
             $this->getZookeeper();
             if (!self::$_instance->exists($path)) {
                 $this->set($key, '');
+                Config::$logDriver->write('qconfConfigMiss.log', "Key: $key");
                 $result = null;
             } else {
                 $result = self::$_instance->get($path);

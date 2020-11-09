@@ -20,6 +20,8 @@ class Config
      */
     protected static $driver;
 
+    public static $logDriver;
+
     /**
      * Config constructor.
      * @throws ConfigException
@@ -29,9 +31,11 @@ class Config
         if (defined('YII_ENV')) {
             $configStorageMedium = \Yii::$app->params['configStorageMedium'];
             $configStorageParams = \Yii::$app->params['configStorageParams'];
+            $logDriver = \Yii::$app->get(\Yii::$app->params['configLogDriver']);
         } elseif (defined('APP_ENVIRONMENT')) {
             $configStorageMedium = \Phalcon\Di::getDefault()->get('config')->params->configStorageMedium;
             $configStorageParams = \Phalcon\Di::getDefault()->get('config')->params->configStorageParams->toArray();
+            $logDriver = \Phalcon\DI::getDefault()->get('configLogDriver');
         } else {
             $file = __DIR__ . '/config.json';
             $config = file_exists($file) ? json_decode(file_get_contents(__DIR__ . '/config.json'), true) : null;
@@ -46,6 +50,7 @@ class Config
             throw new ConfigException('no driver,please check');
         }
         self::$driver = new $class($configStorageParams);
+        self::$logDriver = $logDriver;
     }
 
     /**

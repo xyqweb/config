@@ -8,6 +8,7 @@ declare(strict_types = 1);
  */
 
 namespace xyqWeb\config\drivers;
+use xyqWeb\config\Config;
 
 
 class Redis extends ConfigFactory
@@ -65,6 +66,7 @@ class Redis extends ConfigFactory
             return self::$_instance->get($key);
         } else {
             self::$_instance->set($key, '');
+            Config::$logDriver->write('redisConfigMiss.log', "Key: $key");
             return null;
         }
     }
