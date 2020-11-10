@@ -8,6 +8,7 @@ declare(strict_types = 1);
  */
 
 namespace xyqWeb\config\drivers;
+use xyqWeb\config\Config;
 
 
 class QConf extends ConfigFactory
