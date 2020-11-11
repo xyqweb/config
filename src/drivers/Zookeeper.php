@@ -121,7 +121,9 @@ class Zookeeper extends ConfigFactory
     {
         $path = $this->buildPath($key);
         if (!self::$_instance->exists($path)) {
-            $this->makePath($path);
+            if (!$this->makePath($path)) {
+                return false;
+            }
             $result = $this->makeNode($path, $value);
             if ($result == $path) {
                 return true;
@@ -156,11 +158,15 @@ class Zookeeper extends ConfigFactory
      * @author xyq
      * @param $path
      * @param string $value
+     * @return bool
      */
     private function makePath($path, string $value = '')
     {
-        $parts = explode('/', $path);
-        $parts = array_filter($parts);//过滤空值
+        $originParts = explode('/', $path);
+        $parts = array_filter($originParts);//过滤空值
+        if ((count($originParts) - 1) != count($parts)) {
+            return false;
+        }
         $subPath = '';
         while (count($parts) > 1) {
             $subPath .= '/' . array_shift($parts);//数组第一个元素弹出数组
@@ -168,6 +174,7 @@ class Zookeeper extends ConfigFactory
                 $this->makeNode($subPath, $value);
             }
         }
+        return true;
     }
 
     /**

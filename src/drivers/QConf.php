@@ -152,7 +152,9 @@ class QConf extends ConfigFactory
         $path = $this->buildPath($key);
         $this->getZookeeper();
         if (!self::$_instance->exists($path)) {
-            $this->makePath($path);
+            if (!$this->makePath($path)) {
+                return false;
+            }
             $result = $this->makeNode($path, $value);
             if ($result == $path) {
                 return true;
@@ -187,13 +189,17 @@ class QConf extends ConfigFactory
      * 创建路径
      *
      * @author xyq
-     * @param $path
+     * @param string $path
      * @param string $value
+     * @return bool
      */
-    private function makePath(string $path, string $value = '')
+    private function makePath(string &$path, string $value = '')
     {
-        $parts = explode('/', $path);
-        $parts = array_filter($parts);//过滤空值
+        $originParts = explode('/', $path);
+        $parts = array_filter($originParts);//过滤空值
+        if ((count($originParts) - 1) != count($parts)) {
+            return false;
+        }
         $subPath = '';
         while (count($parts) > 1) {
             $subPath .= '/' . array_shift($parts);//数组第一个元素弹出数组
@@ -201,6 +207,8 @@ class QConf extends ConfigFactory
                 $this->makeNode($subPath, $value);
             }
         }
+        $path = $subPath . '/' . array_shift($parts);
+        return true;
     }
 
     /**
